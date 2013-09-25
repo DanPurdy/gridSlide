@@ -1,13 +1,53 @@
+#slider-nav { 
+	display: none; 
+	margin-top: 1em;
+}
+
+#slider-nav button {
+	padding: 1em;
+	margin-right: 1em;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.slider {
+	width: inherit;
+	height: 300px;
+	overflow: scroll;
+}
+
+.slider ul {
+	position:relative;
+	clear:both;
+	list-style: none;
+	padding:0;
+	margin:0;
+}
+
+.slider li {
+	float: left;
+	height:300px;
+}
+
+.grid{
+	
+}
+
 .grid-nav{
-	width:20%;
+	width:32%;
 	margin:0 auto;
 }
 
-.grid-nav-layer{
+.grid-nav-layer li{
+	display:inline;
 	padding:5px;
 }
 
 .grid-nav-icon{
 	margin:5px;
 	cursor: pointer;
+}
+
+.grid-active{
+	color:red;
 }

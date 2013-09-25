@@ -31,23 +31,26 @@ function gridSlide( container, nav, grid ) {
 
 	if (grid){
 
-		this.gridText ='<div class="grid-nav">';
+		this.gridText ='<div class="grid"><div class="grid-nav">';
 
 		for(i=0; i <this.list.length; i++){
 
-			this.gridText += '<div class="grid-nav-layer">';
+			this.gridText += '<ul class="grid-nav-layer">';
 			for(j=0; j< this.imgs[i].length; j++){
-				this.gridText += '<span class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" >X</span>';
+				this.gridText += '<li class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" >X</li>';
 			}
-			this.gridText += '</div>';
+			this.gridText += '</ul>';
 		}
-
+		this.gridText += '</div></div>';
 		this.nav.append(this.gridText);
 	}
 
 	$('.grid-nav-icon').on('click', function(){
 
 		self.transition($(this).data('x'), $(this).data('y'));
+		
+		if (self.activeGridEl) $(self.activeGridEl).removeClass('grid-active');
+		self.activeGridEl = $(this).addClass('grid-active');
 	});
 
 	$('.nav-buttons').find('button').on('click', function() {
@@ -56,7 +59,7 @@ function gridSlide( container, nav, grid ) {
 	});
 
 
-	
+	return this;
 }
 
 gridSlide.prototype.transition = function( x, y ) {
