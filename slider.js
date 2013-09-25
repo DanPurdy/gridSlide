@@ -1,8 +1,16 @@
-function gridSlide( container, nav ) {
-	this.container = container;
+function gridSlide( container, nav, grid ) {
+	this.slider = container;
 	this.nav = nav.show();
 
-	this.list = this.container.find('ul');
+	var self = this;
+
+	$('head').append('<link rel="stylesheet" href="gridslide.css" type="text/css" />');
+
+	this.navText = '<div class="nav-buttons"><button class="horizontal" data-dir="prev">'+ 'Prev' + '</button><button class="horizontal" data-dir="next">' + 'Next' + '</button>';
+	this.navText += '<button class="vertical" data-dir="up">'+ 'Up' + '</button><button class="vertical" data-dir="down">' + 'Down' + '</button></div>';
+	this.nav.append(this.navText);
+
+	this.list = this.slider.find('ul');
 
 	this.imgs=[],
 	this.imgWidth = [],
@@ -21,14 +29,44 @@ function gridSlide( container, nav ) {
 
 	}
 
+	if (grid){
+
+		this.gridText ='<div class="grid-nav">';
+
+		for(i=0; i <this.list.length; i++){
+
+			this.gridText += '<div class="grid-nav-layer">';
+			for(j=0; j< this.imgs[i].length; j++){
+				this.gridText += '<span class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" >X</span>';
+			}
+			this.gridText += '</div>';
+		}
+
+		this.nav.append(this.gridText);
+	}
+
+	$('.grid-nav-icon').on('click', function(){
+
+		self.transition($(this).data('x'), $(this).data('y'));
+	});
+
+	$('.nav-buttons').find('button').on('click', function() {
+		self.setCurrent( $(this).data('dir') );
+		self.transition();
+	});
+
 
 	
 }
 
 gridSlide.prototype.transition = function( x, y ) {
+
+	if(x>=0){this.current[0]=x;}
+	if(y>=0){this.current[1]=y;}
+
 	this.list.stop().animate({
-		'margin-left': x || -( this.current[0] * this.imgWidth[this.current[1]]),
-		'top': y || -( this.current[1] * this.imgHeight[this.current[1]])
+		'margin-left': -( this.current[0] * this.imgWidth[this.current[1]]),
+		'top': -( this.current[1] * this.imgHeight[this.current[1]])
 
 	});
 };
@@ -60,7 +98,7 @@ gridSlide.prototype.setCurrent = function( dir ) {
 
 		return level;
 
-	};
+	}
 };
 
 

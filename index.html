@@ -3,7 +3,7 @@
 <head>
 	<meta charset=utf-8>
 	<title>Grid Slide</title>
-	<link rel="stylesheet" href="gridslide.css">
+	<link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
 
@@ -27,15 +27,13 @@
 		<li><img src="img/img1.gif" alt="image"></li>
 		<li><img src="img/img2.gif" alt="image"></li>
 		<li><img src="img/img3.gif" alt="image"></li>
+		<li><img src="img/img3.gif" alt="image"></li>
 	</ul>
 
 </div>
 
 <div id="slider-nav">
-	<button class="horizontal" data-dir="prev">Previous</button>
-	<button class="horizontal" data-dir="next">Next</button>
-	<button class="vertical" data-dir="up">Up</button>
-	<button class="vertical" data-dir="down">Down</button>
+	
 </div>
 
 <script src="lib/jquery-1.10.2.js"></script>
@@ -45,12 +43,11 @@
 
 (function() {
 	var container = $('div.slider').css('overflow', 'hidden'),
-		slider = new gridSlide( container, $('#slider-nav') );
+		slider = new gridSlide( container, $('#slider-nav'), true );
 
-	slider.nav.find('button').on('click', function() {
-		slider.setCurrent( $(this).data('dir') );
-		slider.transition();
-	});
+	
+
+	
 	
 })();
 
