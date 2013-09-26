@@ -6,4 +6,22 @@ body {
 * { margin: 0; padding: 0; }
 
 
+::selection{
+	color:#000;
+
+}
+#slider-nav { 
+	display: none; 
+	margin-top: 1em;
+}
+
+#slider-nav a{
+	font-size:1.3em;
+	padding: 1em;
+	margin-right: 1em;
+	border-radius: 10px;
+	cursor: pointer;
+
+}
+
 

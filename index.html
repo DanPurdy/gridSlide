@@ -41,15 +41,14 @@
 <script src="slider.js"></script>
 <script>
 
-(function() {
-	var container = $('div.slider').css('overflow', 'hidden'),
-		slider = new gridSlide( container, $('#slider-nav'), true );
+	slider = new gridSlide( $('.slider'), $('#slider-nav'), true );
 
-	
+	// $('.slider').gridSlide($('#slider-nav'));
 
-	
-	
-})();
+	// console.log($('.slider'));
+
+
+
 
 
 
