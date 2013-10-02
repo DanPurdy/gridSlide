@@ -4,6 +4,7 @@
 	<meta charset=utf-8>
 	<title>Grid Slide</title>
 	<link rel="stylesheet" href="style.css" type="text/css">
+	
 </head>
 <body>
 
@@ -14,19 +15,14 @@
 		<li><img src="img/img3.gif" alt="image"></li>
 		<li><img src="img/img4.gif" alt="image"></li>
 		<li><img src="img/img4.gif" alt="image"></li>
-		<li><img src="img/img4.gif" alt="image"></li>
 	</ul>
 	<ul>
 		<li><img src="img/img1.gif" alt="image"></li>
 		<li><img src="img/img2.gif" alt="image"></li>
-		<li><img src="img/img3.gif" alt="image"></li>
-		<li><img src="img/img4.gif" alt="image"></li>
-		<li><img src="img/img4.gif" alt="image"></li>
 	</ul>
 	<ul>
 		<li><img src="img/img1.gif" alt="image"></li>
 		<li><img src="img/img2.gif" alt="image"></li>
-		<li><img src="img/img3.gif" alt="image"></li>
 		<li><img src="img/img3.gif" alt="image"></li>
 	</ul>
 
@@ -38,14 +34,14 @@
 
 <script src="lib/jquery-1.10.2.js"></script>
 
-<script src="slider.js"></script>
+<script src="gridJs.js"></script>
 <script>
 
-	slider = new gridSlide( $('.slider'), $('#slider-nav'), true );
+	// slider = new gridSlide( $('.slider'), $('#slider-nav'), true );
 
-	// $('.slider').gridSlide($('#slider-nav'));
-
-	// console.log($('.slider'));
+	$('.slider').gridSlide({
+		grid: true
+	});
 
 
 

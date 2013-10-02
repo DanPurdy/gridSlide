@@ -2,12 +2,12 @@
 
 	var grid = {
 		init: function(options, elem){
-
+			
 			var self = this;
 				self.elem = elem;
-				self.$elem = $(elem);
+				self.$elem = $(elem).css({'overflow': 'hidden'});
 
-			if(options) self.options = $.extend({}, $.fn.gridSlide.options, options);
+			self.options = $.extend({}, $.fn.gridSlide.options, options);
 			
 			self.list = self.$elem.find('ul');
 
@@ -16,7 +16,6 @@
 			self.imgHeight = [];
 			self.imgsLen = [];
 			self.current = [0,0];
-			
 			for(i=0; i<self.list.length; i++){
 				
 				self.imgs[i] = $(self.list[i]).find('img');
@@ -27,76 +26,87 @@
 
 			}
 
-			if ($.fn.gridSlide.options.gridNav){
 
-				self.gridText ='<div class="grid"><div class="grid-nav">';
+			if (self.options.grid){
 
-				for(i=0; i <self.list.length; i++){
-
-					self.gridText += '<ul class="grid-nav-layer">';
-					for(j=0; j< self.imgs[i].length; j++){
-						if(i===0 && j===0) {
-							self.gridText += '<li class="grid-nav-icon grid-active" data-x="'+ j +'" data-y="' + i +'" >X</li>';
-							
-						}else{
-							self.gridText += '<li class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" >X</li>';
-						}
-					}
-					self.gridText += '</ul>';
-				}
-
-				self.gridText += '</div></div>';
-				$.fn.gridSlide.options.nav.show().append(self.gridText);
-				self.$activeGridEl = $('.grid-active');
+				this.buildGrid();
+				
 
 			}else{
 
-				self.navText = '<div class="nav-buttons"><a class="horizontal" data-dir="prev">Prev</a><a class="horizontal" data-dir="next">Next</a>';
-				self.navText += '<a class="vertical" data-dir="up">Up</a><a class="vertical" data-dir="down">Down</a></div>';
-				$.fn.gridSlide.options.nav.show().append(self.navText);
+				this.buildNav();
 			}
 
+			this.attachHandlers();
+			
+		},
 
+		buildGrid: function(){
+
+			this.gridText ='<div class="grid"><div class="grid-nav">';
+
+				for(i=0; i <this.list.length; i++){
+
+					this.gridText += '<ul class="grid-nav-layer">';
+					for(j=0; j< this.imgs[i].length; j++){
+						if(i===0 && j===0) {
+							this.gridText += '<li class="grid-nav-icon grid-active" data-x="'+ j +'" data-y="' + i +'" >X</li>';
+							
+						}else{
+							this.gridText += '<li class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" >X</li>';
+						}
+					}
+					this.gridText += '</ul>';
+				}
+
+				this.gridText += '</div></div>';
+				$.fn.gridSlide.options.nav.show().append(this.gridText);
+				this.$activeGridEl = $('.grid-active');
+		},
+
+		buildNav: function(){
+			
+			this.navText = '<div class="nav-buttons"><a class="horizontal prev" data-dir="prev">Prev</a><a class="horizontal next" data-dir="next">Next</a>';
+			this.navText += '<a class="vertical up" data-dir="up">Up</a><a class="vertical down" data-dir="down">Down</a></div>';
+			$.fn.gridSlide.options.nav.show().append(this.navText);
+		},
+
+		attachHandlers: function(){
+			var self=this;
 			//click handler for the grid nav
-	$('.grid-nav-icon').on('click', function(){
+			$('.grid-nav-icon').on('click', function(){
+				self.transition($(this).data('x'), $(this).data('y'));
+				self.$activeGridEl.removeClass('grid-active');
+				self.$activeGridEl = $(this).addClass('grid-active');
+			});
 
-		self.transition($(this).data('x'), $(this).data('y'));
-		
-		self.$activeGridEl.removeClass('grid-active');
-		self.$activeGridEl = $(this).addClass('grid-active');
-	});
-
+			$('.nav-buttons').find('a').on('click', function() {
+				self.setCurrent( $(this).data('dir'));
+				self.transition();
+			});
 		},
 
 		setCurrent: function(dir){
 
-	
 			if (dir === 'next' || dir === 'prev'){
-
 				var pos = this.current[0];
 
 				pos += ( ~~( dir === 'next' ) || -1 );
-
-				self.current[0] = ( pos < 0 ) ? self.imgsLen[self.current[1]] - 1 : pos % self.imgsLen[self.current[1]];
-
-				return pos;
-
+				this.current[0] = ( pos < 0 ) ? this.imgsLen[this.current[1]] - 1 : pos % this.imgsLen[this.current[1]];
 			}else {
-				var level = self.current[1];
-
+				var level = this.current[1];
 				level += ( ~~(dir === 'down') || -1);
 
-				self.current[1] = (level < 0) ? self.list.length -1 : level % self.list.length;
+				this.current[1] = (level < 0) ? this.list.length -1 : level % this.list.length;
 
 
-				if(self.current[0] > self.imgsLen[self.current[1]] -1){
-					self.current[0] = self.imgsLen[self.current[1]] -1;
+				if(this.current[0] > this.imgsLen[this.current[1]] -1){
+					this.current[0] = this.imgsLen[this.current[1]] -1;
 				}
 
 
-				return level;
-
 			}
+			console.log(this.current);
 		},
 
 		transition: function( x, y ) {
@@ -114,6 +124,7 @@
 
 
 		}
+
 	};
 
 	$.fn.gridSlide = function(options){
@@ -126,7 +137,7 @@
 			var gridObj = Object.create(grid);
 
 			gridObj.init(options, this);
-			gridObj.transition(1, 5);
+
 
 		});
 		
@@ -134,9 +145,8 @@
 
 	$.fn.gridSlide.options = {
 		nav: $('#slider-nav'),
-		gridNav: true
+		grid: true
 			
 	};
 
-
-})(jQuery); 
+})(jQuery);

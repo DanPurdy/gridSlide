@@ -1,33 +1,31 @@
 function gridSlide( container, nav, grid ) {
+	$('head').append('<link rel="stylesheet" href="gridslide.css" type="text/css" />');
+
 	this.slider = container;
+	$(this.slider).css('overflow', 'hidden');
 	this.nav = nav.show();
 
 	var self = this;
 
-	$('head').append('<link rel="stylesheet" href="gridslide.css" type="text/css" />');
-
-	this.navText = '<div class="nav-buttons"><button class="horizontal" data-dir="prev">'+ 'Prev' + '</button><button class="horizontal" data-dir="next">' + 'Next' + '</button>';
-	this.navText += '<button class="vertical" data-dir="up">'+ 'Up' + '</button><button class="vertical" data-dir="down">' + 'Down' + '</button></div>';
-	this.nav.append(this.navText);
-
 	this.list = this.slider.find('ul');
 
-	this.imgs=[],
-	this.imgWidth = [],
-	this.imgHeight = [],
-	this.imgsLen = [];
-	this.current = [0,0];
+	this.imgs      = [];
+	this.imgWidth  = [];
+	this.imgHeight = [];
+	this.imgsLen   = [];
+	this.current   = [0,0];
 
 
 	for(i=0; i<this.list.length; i++){
 		
-		this.imgs[i] = $(this.list[i]).find('img');
-		this.imgWidth[i] = this.imgs[i][i].width;
-		this.imgHeight[i] = this.imgs[i][i].height;
-		this.imgsLen[i] = this.imgs[i].length;
+		this.imgs[i]      = $(this.list[i]).find('img');
+		this.imgWidth[i]  = this.imgs[i][0].width;
+		this.imgHeight[i] = this.imgs[i][0].height;
+		this.imgsLen[i]   = this.imgs[i].length;
 		$(this.list[i]).width(this.imgWidth[i]*this.imgsLen[i]);
 
 	}
+
 
 	if (grid){
 
@@ -37,14 +35,23 @@ function gridSlide( container, nav, grid ) {
 
 			this.gridText += '<ul class="grid-nav-layer">';
 			for(j=0; j< this.imgs[i].length; j++){
-				this.gridText += '<li class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" >X</li>';
+				this.gridText += '<li class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" ><img src="'+ $(this.imgs[i][j]).attr('src')+'" alt="image" width="40px" height="20px"></li>';
 			}
 			this.gridText += '</ul>';
 		}
+
 		this.gridText += '</div></div>';
 		this.nav.append(this.gridText);
+
+	}else{
+
+		this.navText = '<div class="nav-buttons"><a class="horizontal" data-dir="prev">Prev</a><a class="horizontal" data-dir="next">Next</a>';
+		this.navText += '<a class="vertical" data-dir="up">Up</a><a class="vertical" data-dir="down">Down</a></div>';
+		this.nav.append(this.navText);
 	}
 
+	
+	//click handler for the grid nav
 	$('.grid-nav-icon').on('click', function(){
 
 		self.transition($(this).data('x'), $(this).data('y'));
@@ -53,7 +60,8 @@ function gridSlide( container, nav, grid ) {
 		self.activeGridEl = $(this).addClass('grid-active');
 	});
 
-	$('.nav-buttons').find('button').on('click', function() {
+	//click handler for the navigation links
+	$('.nav-buttons').find('a').on('click', function() {
 		self.setCurrent( $(this).data('dir') );
 		self.transition();
 	});
