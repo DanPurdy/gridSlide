@@ -27,12 +27,12 @@
 			}
 
 
-			if (self.options.grid){
+			if (self.options.menu === 'grid'){
 
 				this.buildGrid();
 				
 
-			}else{
+			}else if(self.options.menu ==='nav'){
 
 				this.buildNav();
 			}
@@ -50,17 +50,17 @@
 					this.gridText += '<ul class="grid-nav-layer">';
 					for(j=0; j< this.imgs[i].length; j++){
 						if(i===0 && j===0) {
-							this.gridText += '<li class="grid-nav-icon grid-active" data-x="'+ j +'" data-y="' + i +'" >X</li>';
+							this.gridText += '<li class="grid-nav-icon grid-active" data-x="'+ j +'" data-y="' + i +'" ></li>';
 							
 						}else{
-							this.gridText += '<li class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" >X</li>';
+							this.gridText += '<li class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" ></li>';
 						}
 					}
-					this.gridText += '</ul>';
+					this.gridText += '<div class="clear"></div></ul>';
 				}
 
 				this.gridText += '</div></div>';
-				$.fn.gridSlide.options.nav.show().append(this.gridText);
+				this.options.nav.show().append(this.gridText);
 				this.$activeGridEl = $('.grid-active');
 		},
 
@@ -120,7 +120,7 @@
 				'margin-left': -( self.current[0] * self.imgWidth[self.current[1]]),
 				'top': -( self.current[1] * self.imgHeight[self.current[1]])
 
-			});
+			},this.options.speed);
 
 
 		}
@@ -145,7 +145,8 @@
 
 	$.fn.gridSlide.options = {
 		nav: $('#slider-nav'),
-		grid: true
+		menu: 'grid',
+		speed: 1000
 			
 	};
 
