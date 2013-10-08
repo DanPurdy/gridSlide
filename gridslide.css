@@ -34,6 +34,11 @@
 	border: 2px solid #a2a2a2;
 }
 
+.grid-nav-layer li img{
+	width:80px;
+	height:40px;
+}
+
 .grid-active{
 	background-color: #c4c2c3;
 }
