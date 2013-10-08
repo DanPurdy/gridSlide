@@ -35,10 +35,6 @@
 
 				this.buildNav();
 
-			}else if(self.options.menu ==='img'){
-				
-				this.buildImgNav();
-			
 			}
 
 			this.attachHandlers();
