@@ -29,19 +29,23 @@
 
 			if (self.options.menu === 'grid'){
 
-				this.buildGrid();
+				this.buildGridNav(self.options.imgGrid);
 				
-
 			}else if(self.options.menu ==='nav'){
 
 				this.buildNav();
+
+			}else if(self.options.menu ==='img'){
+				
+				this.buildImgNav();
+			
 			}
 
 			this.attachHandlers();
 			
 		},
 
-		buildGrid: function(){
+		buildGridNav: function(imgGrid){
 
 			this.gridText ='<div class="grid"><div class="grid-nav">';
 
@@ -50,13 +54,30 @@
 					this.gridText += '<ul class="grid-nav-layer">';
 					for(j=0; j< this.imgs[i].length; j++){
 						if(i===0 && j===0) {
-							this.gridText += '<li class="grid-nav-icon grid-active" data-x="'+ j +'" data-y="' + i +'" ></li>';
+
+							this.gridText += '<li class="grid-nav-icon grid-active" data-x="'+ j +'" data-y="' + i +'" >';
+
+							if(imgGrid){
+							
+								this.gridText += '<img src="' + $(this.imgs[i][j]).attr('src') + '" alt="' + $(this.imgs[i][j]).attr('alt') + '" >';
+							
+							}
+							
+							this.gridText += '</li>';
 							
 						}else{
-							this.gridText += '<li class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" ></li>';
+							this.gridText += '<li class="grid-nav-icon" data-x="'+ j +'" data-y="' + i +'" >';
+							
+							if(imgGrid){
+								
+								this.gridText += '<img src="'+ $(this.imgs[i][j]).attr('src')+'" alt="' + $(this.imgs[i][j]).attr('alt') + '" >';
+							
+							}
+
+							this.gridText += '</li>';
 						}
 					}
-					this.gridText += '<div class="clear"></div></ul>';
+					this.gridText += '</ul>';
 				}
 
 				this.gridText += '</div></div>';
@@ -146,6 +167,7 @@
 	$.fn.gridSlide.options = {
 		nav: $('#slider-nav'),
 		menu: 'grid',
+		imgGrid: false,
 		speed: 1000
 			
 	};
