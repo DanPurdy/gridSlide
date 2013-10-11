@@ -79,6 +79,11 @@ if (typeof Object.create !== 'function'){
 
 				for(i=0; i <this.list.length; i++){
 
+					if(this.options.title){
+						
+						this.gridText += '<h3>'+$(this.imgs[i][0]).attr('alt')+'</h3>';
+					}
+
 					this.gridText += '<ul class="grid-nav-layer">';
 					for(j=0; j< this.imgs[i].length; j++){
 						if(i===0 && j===0) {
@@ -118,7 +123,7 @@ if (typeof Object.create !== 'function'){
 			
 			this.navText = '<div class="nav-buttons"><a class="horizontal prev" data-dir="prev">Prev</a><a class="horizontal next" data-dir="next">Next</a>';
 			this.navText += '<a class="vertical up" data-dir="up">Up</a><a class="vertical down" data-dir="down">Down</a></div>';
-			$.fn.gridSlide.options.nav.show().append(this.navText);
+			this.options.nav.show().append(this.navText);
 		},
 
 		//Function to attach the event handlers
@@ -212,6 +217,7 @@ if (typeof Object.create !== 'function'){
 		customCss: true,
 		nav: $('#slider-nav'),
 		menu: 'grid',
+		title: false,
 		imgGrid: false,
 		speed: 300
 			
