@@ -30,21 +30,18 @@ if (typeof Object.create !== 'function'){
 			var self = this;
 				self.elem = elem;
 				self.$elem = $(elem).css({'overflow': 'hidden'}); //set reference to the jquery object of elem and make the sliders overflow hidden.
+				
+				self.options = $.extend({}, $.fn.gridSlide.options, options); // extend plugin options with user set values
+				
+				self.$navigation = $(this.options.nav);
+				self.list = self.$elem.find('ul'); //find the ul elements within the selected element
 
-			self.options = $.extend({}, $.fn.gridSlide.options, options); // extend plugin options with user set values
-			
-			self.list = self.$elem.find('ul'); //find the ul elements within the selected element
-
-			//by default this plugin uses its own css stylesheet but if the user would like to override these styles then they can just set the option to false and declare their own styles
-			if(self.options.customCss === true){
-				$('head').append('<link rel="stylesheet" href="gridslide.css" type="text/css" />');
-			}
-			//setting up default arrays
-			self.imgs=[];
-			self.imgWidth = [];
-			self.imgHeight = [];
-			self.imgsLen = [];
-			self.current = [0,0];
+				//setting up default arrays
+				self.imgs=[];
+				self.imgWidth = [];
+				self.imgHeight = [];
+				self.imgsLen = [];
+				self.current = [0,0];
 
 			//populate img, imgwidth, imgHeight and imgLength arrays to store all the information of each image 
 			for(i=0; i<self.list.length; i++){
@@ -60,15 +57,15 @@ if (typeof Object.create !== 'function'){
 			// If user chooses grid navigation then build the grid navigation and set whether user has chosen to use imgs in the grid or not.
 			if (self.options.menu === 'grid'){
 
-				this.buildGridNav(self.options.imgGrid);
+				self.buildGridNav(self.options.imgGrid);
 			
 			}else if(self.options.menu ==='nav'){ //if navigation buttons chosen build those instead
 
-				this.buildNav();
+				self.buildNav();
 
 			}
 
-			this.attachHandlers(); // attach the event handlers
+			self.attachHandlers(); // attach the event handlers
 			
 		},
 
@@ -81,7 +78,7 @@ if (typeof Object.create !== 'function'){
 
 					if(this.options.title){
 						
-						this.gridText += '<h3>'+$(this.imgs[i][0]).attr('alt')+'</h3>';
+						this.gridText += '<h3>'+$(this.list[i]).data('title')+'</h3>';
 					}
 
 					this.gridText += '<ul class="grid-nav-layer">';
@@ -114,16 +111,17 @@ if (typeof Object.create !== 'function'){
 				}
 
 				this.gridText += '</div></div>';
-				this.options.nav.show().append(this.gridText);
+
+				this.$navigation.show().prepend(this.gridText);
 				this.$activeGridEl = $('.grid-active'); //set a reference to the currently 'active' grid element
 		},
 
 		//Function to build the button based navigation menu instead of the img grid
 		buildNav: function(){
-			
-			this.navText = '<div class="nav-buttons"><a class="horizontal prev" data-dir="prev">Prev</a><a class="horizontal next" data-dir="next">Next</a>';
-			this.navText += '<a class="vertical up" data-dir="up">Up</a><a class="vertical down" data-dir="down">Down</a></div>';
-			this.options.nav.show().append(this.navText);
+			this.navText = '<div class="nav-buttons"><a class="horizontal prev" data-dir="prev">Prev</a>';
+			this.navText += '<a class="vertical up" data-dir="up">Up</a><a class="vertical down" data-dir="down">Down</a>';
+			this.navText += '<a class="horizontal next" data-dir="next">Next</a></div>';
+			this.$navigation.show().append(this.navText);
 		},
 
 		//Function to attach the event handlers
@@ -214,8 +212,7 @@ if (typeof Object.create !== 'function'){
 
 	//default plugin options
 	$.fn.gridSlide.options = {
-		customCss: true,
-		nav: $('#slider-nav'),
+		nav: '#slider-nav',
 		menu: 'grid',
 		title: false,
 		imgGrid: false,
