@@ -1,5 +1,5 @@
 .slider {
-	width: inherit;
+	width: 600px;
 	height: 300px;
 	overflow: scroll;
 }
@@ -19,6 +19,10 @@
 
 .grid-nav{
 	width: 100%;
+}
+h3{
+	padding:5px;
+	clear:both;
 }
 
 .grid-nav ul{

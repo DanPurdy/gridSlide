@@ -4,28 +4,29 @@
 	<meta charset=utf-8>
 	<title>Grid Slide</title>
 	<link rel="stylesheet" href="style.css" type="text/css">
+	<link rel="stylesheet" href="gridslide.css" type="text/css">
 	
 </head>
 <body>
 
 	<div class="slider">
-		<ul>
-			<li><img src="img/img1.gif" alt="image"></li>
-			<li><img src="img/img2.gif" alt="image"></li>
-			<li><img src="img/img3.gif" alt="image"></li>
-			<li><img src="img/img4.gif" alt="image"></li>
-			<li><img src="img/img4.gif" alt="image"></li>
+		<ul data-title="Row 1">
+			<li><img src="img/img1-1.jpg" alt="image"></li>
+			<li><img src="img/img1-2.jpg" alt="image"></li>
+			<li><img src="img/img1-3.jpg" alt="image"></li>
+			<li><img src="img/img1-4.jpg" alt="image"></li>
+			<li><img src="img/img1-5.jpg" alt="image"></li>
 		</ul>
-		<ul>
-			<li><img src="img/img1.gif" alt="image"></li>
-			<li><img src="img/img2.gif" alt="image"></li>
-			<li><img src="img/img3.gif" alt="image"></li>
-			<li><img src="img/img4.gif" alt="image"></li>
+		<ul data-title="Row 2">
+			<li><img src="img/img2-1.jpg" alt="image"></li>
+			<li><img src="img/img2-2.jpg" alt="image"></li>
+			<li><img src="img/img2-3.jpg" alt="image"></li>
+			<li><img src="img/img2-4.jpg" alt="image"></li>
 		</ul>
-		<ul>
-			<li><img src="img/img1.gif" alt="image"></li>
-			<li><img src="img/img2.gif" alt="image"></li>
-			<li><img src="img/img3.gif" alt="image"></li>
+		<ul data-title="Row 3">
+			<li><img src="img/img3-1.jpg" alt="image"></li>
+			<li><img src="img/img3-2.jpg" alt="image"></li>
+			<li><img src="img/img3-3.jpg" alt="image"></li>
 		</ul>
 
 	</div>
@@ -38,11 +39,13 @@
 <script src="gridSlide.js"></script>
 
 <script>
-
-	$('.slider').gridSlide({
-		menu: 'grid',
-		imgGrid: true,
-		speed: 500
+	$(window).load(function() {
+		$('.slider').gridSlide({
+			menu: 'grid',
+			imgGrid: true,
+			title: true,
+			speed: 500
+		});
 	});
 
 </script>
